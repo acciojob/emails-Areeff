@@ -27,35 +27,42 @@ public class Email {
         // 3. It contains at least one lowercase letter
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
-        if(Objects.equals(this.getPassword(), oldPassword)){
+        if(oldPassword.equals(password)){
             if(checkPasswordStrength(newPassword)){
+                System.out.println("Password changed sucessfully");
                 this.password=newPassword;
             }
+            else{
+                System.out.println("The new password is not valid");
+            }
+        }
+        else{
+            System.out.println("The old password does not match");
         }
     }
 
     private boolean checkPasswordStrength(String newPassword) {
         int n=newPassword.length();
-        int upper=0;
-        int lower=0;
-        int digit=0;
-        int special=0;
+        Boolean uppercase=false;
+        Boolean lowercase=false;
+        Boolean digit=false;
+        Boolean specialCharacter=false;
         for(int i=0;i<n;i++){
-
-            if(newPassword.charAt(i)-'a'>=0&&newPassword.charAt(i)-'a'<=25){
-                lower++;
+            char ch=newPassword.charAt(i);
+            if(ch>='a'&&ch<='z'){
+                lowercase=true;
             }
-            else if(newPassword.charAt(i)-'A'>=0&&newPassword.charAt(i)-'A'<=25){
-                upper++;
+            else if(ch>='A'&&ch<='Z'){
+                uppercase=true;
             }
-            else if(newPassword.charAt(i)-'0'>=0&&newPassword.charAt(i)-'0'<=9){
-                digit++;
+            else if(ch>='0'&&ch<='9'){
+                digit=true;
             }
             else{
-                special++;
+                specialCharacter=true;
             }
         }
-        if(newPassword.length()>=8&&lower>=1&&upper>=1&&digit>=1&&special>=1){
+        if(newPassword.length()>=8&& lowercase && uppercase && digit && specialCharacter){
             return true;
         }
         return false;
